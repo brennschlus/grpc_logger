@@ -1,0 +1,5 @@
+name: grpc_logger
+version: 0.0.1
+issueTracker: https://github.com/brennschlus/grpc_logger/issues
+materialIconCodePoint: '0xe0b1'
+requiresConnection: false  # optional field - defaults to true

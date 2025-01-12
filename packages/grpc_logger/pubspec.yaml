@@ -1,7 +1,7 @@
 name: grpc_logger
-description: A sample command-line application.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: Intercepts gRPC calls and displays them in JSON in DevTools.
+version: 0.0.1
+repository: https://github.com/brennschlus/grpc_logger
 
 environment:
   sdk: ^3.6.0
@@ -10,6 +10,7 @@ environment:
 dependencies:
   grpc: ^4.0.1
   protobuf: ^3.1.0
+  very_good_analysis: ^7.0.0
 
 dev_dependencies:
   lints: ^5.0.0

@@ -1,12 +1,17 @@
-import 'package:grpc/service_api.dart';
-import 'package:protobuf/protobuf.dart';
 import 'dart:developer' as developer;
 
-class LoggerInterceptor extends ClientInterceptor {
-  final Set<ClientMethod> filteredCalls;
+import 'package:grpc/service_api.dart';
+import 'package:protobuf/protobuf.dart';
 
-  LoggerInterceptor({filteredCalls})
-      : filteredCalls = filteredCalls ?? const {};
+/// gRPC call logger that bypasses logging for filtered methods.
+///
+/// Logs details of unary calls unless they're in `filteredCalls`.
+class LoggerInterceptor extends ClientInterceptor {
+  ///@nodoc
+  LoggerInterceptor({this.filteredCalls});
+
+  /// List of methods for which logging should be skipped.
+  final Set<ClientMethod<dynamic, dynamic>>? filteredCalls;
 
   @override
   ResponseFuture<R> interceptUnary<Q, R>(
@@ -15,7 +20,7 @@ class LoggerInterceptor extends ClientInterceptor {
     CallOptions options,
     ClientUnaryInvoker<Q, R> invoker,
   ) {
-    if (filteredCalls.contains(method)) {
+    if (filteredCalls != null && filteredCalls!.contains(method)) {
       return invoker(method, request, options);
     }
 

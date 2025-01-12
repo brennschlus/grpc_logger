@@ -4,8 +4,11 @@ import 'package:grpc_logger_extention/entities/grpc_call.dart';
 class RpcList extends StatefulWidget {
   final List<GrpcCall> grpcList;
   final ValueChanged<int> onGrpcCallSelected;
-  const RpcList(
-      {super.key, required this.grpcList, required this.onGrpcCallSelected});
+  const RpcList({
+    required this.grpcList,
+    required this.onGrpcCallSelected,
+    super.key,
+  });
 
   @override
   State<RpcList> createState() => _RpcListState();
@@ -32,7 +35,7 @@ class _RpcListState extends State<RpcList> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Scrollbar(
         scrollbarOrientation: ScrollbarOrientation.bottom,
         controller: _scrollControllerX,
@@ -51,7 +54,7 @@ class _RpcListState extends State<RpcList> {
                   child: Row(
                     children: [
                       Text(widget.grpcList[index].time),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Text(widget.grpcList[index].name),
                     ],
                   ),

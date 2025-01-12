@@ -2,9 +2,9 @@ import 'package:devtools_app_shared/ui.dart';
 import 'package:flutter/material.dart';
 
 class GrpcView extends StatefulWidget {
+  const GrpcView({required this.responseJson, required this.title, super.key});
   final Map<String, dynamic>? responseJson;
   final String title;
-  const GrpcView({super.key, required this.responseJson, required this.title});
 
   @override
   State<GrpcView> createState() => _GrpcViewState();
@@ -31,7 +31,7 @@ class _GrpcViewState extends State<GrpcView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Scrollbar(
         scrollbarOrientation: ScrollbarOrientation.bottom,
         controller: _scrollControllerX,
@@ -45,7 +45,7 @@ class _GrpcViewState extends State<GrpcView> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(widget.title),
-                Divider(),
+                const Divider(),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width / 3,
                   child: FormattedJson(

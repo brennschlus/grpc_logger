@@ -7,7 +7,9 @@ void main() {
   runApp(const GRPCLoggerDevToolsExtension());
 }
 
+///@nodoc
 class GRPCLoggerDevToolsExtension extends StatefulWidget {
+  ///@nodoc
   const GRPCLoggerDevToolsExtension({super.key});
 
   @override
@@ -23,7 +25,8 @@ class _GRPCLoggerDevToolsExtensionState
   Widget build(BuildContext context) {
     return DevToolsExtension(
       child: GRPCLoggerDevToolsExtensionBody(
-          grpcCallsController: grpcCallsController),
+        grpcCallsController: grpcCallsController,
+      ),
     );
   }
 }

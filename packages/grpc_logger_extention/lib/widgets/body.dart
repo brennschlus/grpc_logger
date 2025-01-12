@@ -6,10 +6,19 @@ import 'package:grpc_logger_extention/entities/grpc_call.dart';
 import 'package:grpc_logger_extention/widgets/gprc_view.dart';
 import 'package:grpc_logger_extention/widgets/rpc_list.dart';
 
+/// A widget that displays a UI for managing and viewing logged gRPC calls within DevTools.
+///
+/// This widget uses a [GrpcCallsController] to handle the state of gRPC calls,
+/// providing functionality to clear, search, select, and display details of calls.
 class GRPCLoggerDevToolsExtensionBody extends StatefulWidget {
+  ///@nodoc
+  const GRPCLoggerDevToolsExtensionBody({
+    required this.grpcCallsController,
+    super.key,
+  });
+
+  /// The controller managing the list of gRPC calls.
   final GrpcCallsController grpcCallsController;
-  const GRPCLoggerDevToolsExtensionBody(
-      {super.key, required this.grpcCallsController});
 
   @override
   State<GRPCLoggerDevToolsExtensionBody> createState() =>
@@ -27,7 +36,7 @@ class _GRPCLoggerDevToolsExtensionBodyState
         if (event.extensionKind == 'grpc_logger:interceptor_unary_call' &&
             event.extensionData != null) {
           widget.grpcCallsController
-              .addGrpcCall(GrpcCall.fromJson(event.extensionData!.data));
+              .addGrpcCall(GrpcCall.tryFromJson(event.extensionData!.data));
         }
       }),
     );
@@ -44,49 +53,50 @@ class _GRPCLoggerDevToolsExtensionBodyState
               icon: Icons.block_outlined,
               label: 'Clear',
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Flexible(
               child: DevToolsClearableTextField(
                 hintText: 'Search',
-                prefixIcon: Icon(Icons.search_outlined),
+                prefixIcon: const Icon(Icons.search_outlined),
               ),
             ),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ValueListenableBuilder(
-            valueListenable: widget.grpcCallsController,
-            builder: (_, grpcList, __) {
-              return Expanded(
-                child: SplitPane(
-                  axis: Axis.horizontal,
-                  initialFractions: [1 / 3, 1 / 3, 1 / 3],
-                  children: [
-                    RoundedOutlinedBorder(
-                      child: RpcList(
-                        grpcList: grpcList,
-                        onGrpcCallSelected:
-                            widget.grpcCallsController.selectGrpcCall,
-                      ),
+          valueListenable: widget.grpcCallsController,
+          builder: (_, grpcList, __) {
+            return Expanded(
+              child: SplitPane(
+                axis: Axis.horizontal,
+                initialFractions: const [1 / 3, 1 / 3, 1 / 3],
+                children: [
+                  RoundedOutlinedBorder(
+                    child: RpcList(
+                      grpcList: grpcList,
+                      onGrpcCallSelected:
+                          widget.grpcCallsController.selectGrpcCall,
                     ),
-                    RoundedOutlinedBorder(
-                      child: GrpcView(
-                        responseJson: widget
-                            .grpcCallsController.selectedGrpcCall?.request,
-                        title: 'Request',
-                      ),
+                  ),
+                  RoundedOutlinedBorder(
+                    child: GrpcView(
+                      responseJson:
+                          widget.grpcCallsController.selectedGrpcCall?.request,
+                      title: 'Request',
                     ),
-                    RoundedOutlinedBorder(
-                      child: GrpcView(
-                        responseJson: widget
-                            .grpcCallsController.selectedGrpcCall?.response,
-                        title: 'Response',
-                      ),
+                  ),
+                  RoundedOutlinedBorder(
+                    child: GrpcView(
+                      responseJson:
+                          widget.grpcCallsController.selectedGrpcCall?.response,
+                      title: 'Response',
                     ),
-                  ],
-                ),
-              );
-            }),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ],
     );
   }

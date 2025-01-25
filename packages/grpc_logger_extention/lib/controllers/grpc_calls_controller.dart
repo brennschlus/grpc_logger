@@ -25,6 +25,7 @@ class GrpcCallsController extends ChangeNotifier
 
   /// Selects a gRPC call by its index, notifying listeners of the change.
   void selectGrpcCall(int index) {
+    if (index < 0 || index > _grpcList.length - 1) return;
     _selectedIndex = index;
     super.notifyListeners();
   }

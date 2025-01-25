@@ -13,6 +13,9 @@ class GrpcCallsController extends ChangeNotifier
   /// Internal list to store gRPC calls.
   final List<GrpcCall> _grpcList;
 
+  // Filtered from search query grpc calls list.
+  List<GrpcCall> _filteredGrpcCallsList = List.empty();
+
   /// Index of the currently selected gRPC call, if any.
   int? _selectedIndex;
 
@@ -43,6 +46,15 @@ class GrpcCallsController extends ChangeNotifier
     super.notifyListeners();
   }
 
+  /// Searches through the list of gRPC calls based on a query.
+  void search(String query) {
+    if (query.trim().isEmpty) return;
+
+    _filteredGrpcCallsList =
+        List.from(_grpcList.where((call) => call.matchesQuery(query)));
+  }
+
   @override
-  List<GrpcCall> get value => _grpcList;
+  List<GrpcCall> get value =>
+      _filteredGrpcCallsList.isEmpty ? _grpcList : _filteredGrpcCallsList;
 }

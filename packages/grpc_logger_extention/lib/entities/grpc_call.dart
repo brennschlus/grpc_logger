@@ -38,4 +38,8 @@ class GrpcCall {
     }
     return null;
   }
+
+  /// Method to check if the gRPC call name matches the query
+  bool matchesQuery(String query) =>
+      name.toLowerCase().contains(query.toLowerCase());
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:devtools_app_shared/ui.dart';
 import 'package:devtools_extensions/devtools_extensions.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +29,29 @@ class GRPCLoggerDevToolsExtensionBody extends StatefulWidget {
 
 class _GRPCLoggerDevToolsExtensionBodyState
     extends State<GRPCLoggerDevToolsExtensionBody> {
+  /// A TextEditingController holding the text input from the search field
+  final _searchController = TextEditingController();
+
+  /// The debounce time period in milliseconds (500ms = 0.5 seconds)
+  final _debounceTime = 500;
+
+  /// Debounce timer for searching
+  Timer? _debounce;
+
+  /// Search listener function that cancels any existing debounced task
+  /// and schedules a new search after debounceTime expires
+  void searchListener() {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(Duration(milliseconds: _debounceTime), () {
+      widget.grpcCallsController.search(_searchController.text);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+
+    _searchController.addListener(searchListener);
 
     serviceManager.onServiceAvailable.then(
       (service) => service.onExtensionEvent.listen((event) {
@@ -40,6 +62,13 @@ class _GRPCLoggerDevToolsExtensionBodyState
         }
       }),
     );
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(searchListener);
+    _debounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -56,9 +85,9 @@ class _GRPCLoggerDevToolsExtensionBodyState
             const SizedBox(width: 16),
             Flexible(
               child: DevToolsClearableTextField(
-                hintText: 'Search',
-                prefixIcon: const Icon(Icons.search_outlined),
-              ),
+                  hintText: 'Search',
+                  prefixIcon: const Icon(Icons.search_outlined),
+                  controller: _searchController),
             ),
           ],
         ),

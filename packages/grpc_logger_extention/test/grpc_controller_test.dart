@@ -17,6 +17,7 @@ void main() {
 
     test('addGrpcCall adds a call and notifies listeners', () {
       final grpcCall = GrpcCall(
+        id: '1',
         request: {'key': 'value'},
         response: {'result': 'success'},
         name: 'testMethod',
@@ -38,6 +39,7 @@ void main() {
 
     test('clear removes all calls and notifies listeners', () {
       final grpcCall = GrpcCall(
+        id: '1',
         request: {'key': 'value'},
         response: {'result': 'success'},
         name: 'testMethod',
@@ -53,6 +55,7 @@ void main() {
 
     test('selectGrpcCall selects a call and notifies listeners', () {
       final grpcCall = GrpcCall(
+        id: '1',
         request: {'key': 'value'},
         response: {'result': 'success'},
         name: 'testMethod',
@@ -75,12 +78,14 @@ void main() {
 
     test('search filters calls based on query', () {
       final call1 = GrpcCall(
+        id: '1',
         request: {'key': 'value'},
         response: {'result': 'success'},
         name: 'testMethod',
         time: DateTime.now().toIso8601String(),
       );
       final call2 = GrpcCall(
+        id: '2',
         request: {'key': 'value'},
         response: {'result': 'failure'},
         name: 'anotherMethod',
@@ -97,12 +102,14 @@ void main() {
 
     test('search with empty query returns all calls', () {
       final call1 = GrpcCall(
+        id: '1',
         request: {'key': 'value'},
         response: {'result': 'success'},
         name: 'testMethod',
         time: DateTime.now().toIso8601String(),
       );
       final call2 = GrpcCall(
+        id: '2',
         request: {'key': 'value'},
         response: {'result': 'failure'},
         name: 'anotherMethod',

@@ -1,12 +1,18 @@
+import 'package:uuid/uuid.dart';
+
 /// Represents a logged gRPC call with its request, response, name, and time.
 class GrpcCall {
   ///@nodoc
   const GrpcCall({
+    required this.id,
     required this.request,
     required this.response,
     required this.name,
     required this.time,
   });
+
+  /// The unique identifier of the gRPC call.
+  final String id;
 
   /// The request data of the gRPC call.
   final Map<String, dynamic> request;
@@ -34,6 +40,7 @@ class GrpcCall {
         response: response,
         name: method,
         time: time,
+        id: const Uuid().v4(),
       );
     }
     return null;

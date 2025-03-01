@@ -53,6 +53,8 @@ class GrpcCallsController extends ChangeNotifier
 
     _filteredGrpcCallsList =
         List.from(_grpcList.where((call) => call.matchesQuery(query)));
+
+    super.notifyListeners();
   }
 
   @override

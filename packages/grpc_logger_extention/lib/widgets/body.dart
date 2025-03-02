@@ -63,34 +63,6 @@ class _GRPCLoggerDevToolsExtensionBodyState
         }
       }),
     );
-
-    widget.grpcCallsController.addGrpcCall(
-      GrpcCall(
-        id: const Uuid().v4(),
-        name: '/users',
-        request: {'count': 14},
-        response: {
-          'users': [
-            "{id: 1, name: 'John Doe'}, {id: 2, name: 'Jane Doe'}, {id: 3, name: 'Alice Smith'}"
-          ],
-        },
-        time: DateTime.now().millisecondsSinceEpoch.toString(),
-      ),
-    );
-    widget.grpcCallsController.addGrpcCall(
-      GrpcCall(
-        id: const Uuid().v4(),
-        name:
-            '/very_long_grpc_call_name_abcdefg4234234234234234234234234234234234234234242342345678901234567890',
-        request: {'count': 14},
-        response: {
-          'users': [
-            "{id: 1, name: 'John Doe'}, {id: 2, name: 'Jane Doe'}, {id: 3, name: 'Alice Smith'}"
-          ],
-        },
-        time: DateTime.now().millisecondsSinceEpoch.toString(),
-      ),
-    );
   }
 
   @override

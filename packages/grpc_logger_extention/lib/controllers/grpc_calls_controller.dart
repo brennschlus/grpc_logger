@@ -19,6 +19,9 @@ class GrpcCallsController extends ChangeNotifier
   /// Index of the currently selected gRPC call, if any.
   int? _selectedIndex;
 
+  /// Indicates whether the controller is currently in search mode.
+  bool _isSearching = false;
+
   /// Returns the currently selected gRPC call, or null if none is selected.
   GrpcCall? get selectedGrpcCall =>
       _selectedIndex == null ? null : _grpcList[_selectedIndex!];
@@ -49,15 +52,21 @@ class GrpcCallsController extends ChangeNotifier
 
   /// Searches through the list of gRPC calls based on a query.
   void search(String query) {
-    if (query.trim().isEmpty) return;
+    if (query.trim().isEmpty) {
+      _filteredGrpcCallsList = List.empty();
+      _isSearching = false;
+      super.notifyListeners();
+      return;
+    }
 
     _filteredGrpcCallsList =
         List.from(_grpcList.where((call) => call.matchesQuery(query)));
 
+    _isSearching = true;
     super.notifyListeners();
+    print(_filteredGrpcCallsList.length);
   }
 
   @override
-  List<GrpcCall> get value =>
-      _filteredGrpcCallsList.isEmpty ? _grpcList : _filteredGrpcCallsList;
+  List<GrpcCall> get value => _isSearching ? _filteredGrpcCallsList : _grpcList;
 }

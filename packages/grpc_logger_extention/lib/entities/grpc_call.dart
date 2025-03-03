@@ -1,3 +1,4 @@
+import 'package:devtools_app_shared/utils.dart';
 import 'package:uuid/uuid.dart';
 
 /// Represents a logged gRPC call with its request, response, name, and time.
@@ -47,6 +48,5 @@ class GrpcCall {
   }
 
   /// Method to check if the gRPC call name matches the query
-  bool matchesQuery(String query) =>
-      name.toLowerCase().contains(query.toLowerCase());
+  bool matchesQuery(String query) => name.caseInsensitiveFuzzyMatch(query);
 }

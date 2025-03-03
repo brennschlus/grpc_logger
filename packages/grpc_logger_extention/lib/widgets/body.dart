@@ -7,7 +7,6 @@ import 'package:grpc_logger_extention/controllers/grpc_calls_controller.dart';
 import 'package:grpc_logger_extention/entities/grpc_call.dart';
 import 'package:grpc_logger_extention/widgets/gprc_view.dart';
 import 'package:grpc_logger_extention/widgets/rpc_list.dart';
-import 'package:uuid/uuid.dart';
 
 /// A widget that displays a UI for managing and viewing logged gRPC calls within DevTools.
 ///
@@ -51,7 +50,6 @@ class _GRPCLoggerDevToolsExtensionBodyState
   @override
   void initState() {
     super.initState();
-
     _searchController.addListener(searchListener);
 
     serviceManager.onServiceAvailable.then(
@@ -86,9 +84,10 @@ class _GRPCLoggerDevToolsExtensionBodyState
             const SizedBox(width: 16),
             Flexible(
               child: DevToolsClearableTextField(
-                  hintText: 'Search',
-                  prefixIcon: const Icon(Icons.search_outlined),
-                  controller: _searchController),
+                hintText: 'Search',
+                prefixIcon: const Icon(Icons.search_outlined),
+                controller: _searchController,
+              ),
             ),
           ],
         ),

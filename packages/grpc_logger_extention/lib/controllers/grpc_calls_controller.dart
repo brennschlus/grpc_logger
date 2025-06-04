@@ -64,7 +64,6 @@ class GrpcCallsController extends ChangeNotifier
 
     _isSearching = true;
     super.notifyListeners();
-    print(_filteredGrpcCallsList.length);
   }
 
   @override

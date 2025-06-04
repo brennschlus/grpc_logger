@@ -22,6 +22,12 @@ class _GRPCLoggerDevToolsExtensionState
   final GrpcCallsController grpcCallsController = GrpcCallsController();
 
   @override
+  void dispose() {
+    grpcCallsController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DevToolsExtension(
       child: GRPCLoggerDevToolsExtensionBody(
